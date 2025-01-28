@@ -1,11 +1,11 @@
 ARG GOLANG_VERSION=1.22.8
 ARG CUDA_VERSION_11=11.3.1
 ARG CUDA_VERSION_12=12.4.0
-ARG ROCM_VERSION=6.1.2
+ARG ROCM_VERSION=6.3.1
 ARG JETPACK_6=r36.2.0
 ARG JETPACK_5=r35.4.1
-ARG RHEL_VERSION=7
-ARG RHEL_VARIANT=centos-${RHEL_VERSION}
+ARG RHEL_VERSION=8
+ARG RHEL_VARIANT=almalinux-${RHEL_VERSION}
 
 ### To create a local image for building linux binaries on mac or windows with efficient incremental builds
 #
@@ -16,10 +16,11 @@ ARG RHEL_VARIANT=centos-${RHEL_VERSION}
 #
 # make -j 10 dist
 #
-FROM --platform=linux/amd64 rocm/dev-${RHEL_VARIANT}:${RHEL_VERSION}-complete AS unified-builder-amd64
+FROM --platform=linux/amd64 rocm/dev-${RHEL_VARIANT}:${ROCM_VERSION}-complete AS unified-builder-amd64
 ARG GOLANG_VERSION
 ARG CUDA_VERSION_11
 ARG CUDA_VERSION_12
+ARG RHEL_VERSION
 COPY ./scripts/rh_linux_deps.sh /
 ENV PATH /opt/rh/devtoolset-10/root/usr/bin:/usr/local/cuda/bin:$PATH
 ENV LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/usr/local/cuda/lib64
