@@ -17,8 +17,8 @@ func newTextProcessor(c ml.Config) TextProcessor {
 				Values: c.Strings("tokenizer.ggml.tokens"),
 				Types:  c.Uints("tokenizer.ggml.token_type"),
 				Merges: c.Strings("tokenizer.ggml.merges"),
-				BOS:    c.Uint("tokenizer.ggml.bos_token_id"),
-				EOS:    c.Uint("tokenizer.ggml.eos_token_id"),
+				BOS:    int32(c.Uint("tokenizer.ggml.bos_token_id")),
+				EOS:    int32(c.Uint("tokenizer.ggml.eos_token_id")),
 			},
 		},
 	}

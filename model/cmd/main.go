@@ -125,7 +125,7 @@ func temp() error {
 
 		var outputIDs []int32
 		for _, f64 := range f64s {
-			if !m.(model.TextProcessor).Is(uint32(f64), model.SpecialEOS) {
+			if !m.(model.TextProcessor).Is(int32(f64), model.SpecialEOS) {
 				outputIDs = append(outputIDs, int32(f64))
 			}
 		}
