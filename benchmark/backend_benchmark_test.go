@@ -68,7 +68,7 @@ func BenchmarkGGMLOperations(b *testing.B) {
 
 	b.ResetTimer()
 
-	for i := 0; i < b.N; i++ {
+	for range b.N {
 		ctx := m.Backend().NewContext()
 		defer ctx.Close()
 
