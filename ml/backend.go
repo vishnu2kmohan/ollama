@@ -2,6 +2,7 @@ package ml
 
 import (
 	"bytes"
+	"cmp"
 	"encoding/binary"
 	"fmt"
 	"os"
@@ -35,7 +36,7 @@ func RegisterBackend(name string, f func(*os.File) (Backend, error)) {
 }
 
 func NewBackend(f *os.File) (Backend, error) {
-	if backend, ok := backends["ggml"]; ok {
+	if backend, ok := backends[cmp.Or(os.Getenv("OLLAMA_BACKEND"), "ggml")]; ok {
 		return backend(f)
 	}
 
@@ -51,6 +52,28 @@ type Context interface {
 	Compute(Tensor) Tensor
 	MaxTensors() int
 	Close() error
+
+	Timing() []OpTiming
+}
+
+type OpType string
+
+const (
+	View       OpType = "View"
+	Copy       OpType = "Copy"
+	Reshape    OpType = "Reshape"
+	Permute    OpType = "Permute"
+	Contiguous OpType = "Contiguous"
+	Input      OpType = "Input"
+	ComputeOp  OpType = "Compute"
+	Transpose  OpType = "Transpose"
+)
+
+type OpTiming struct {
+	Type      OpType
+	Operation string
+	Duration  float64
+	Order     int
 }
 
 type Tensor interface {

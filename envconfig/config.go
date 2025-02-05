@@ -167,6 +167,8 @@ var (
 	MultiUserCache = Bool("OLLAMA_MULTIUSER_CACHE")
 	// Enable the new Ollama engine
 	NewRunners = Bool("OLLAMA_NEW_RUNNERS")
+	// Ollama is running in a benchmark context, additional timing data will be collected.
+	Benchmark = Bool("OLLAMA_BENCHMARK")
 )
 
 func String(s string) func() string {
